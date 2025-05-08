@@ -73,6 +73,8 @@ student-management/
 │   ├── App.css
 │   └── index.jsx
 └── index.html
+
+bash```
 📱 Responsive Design
 The application is fully responsive and optimized for different device sizes:
 
