@@ -74,21 +74,21 @@ student-management/
 │   └── index.jsx
 └── index.html
 
----
-📱 Responsive Design
+```
+##📱 Responsive Design
 The application is fully responsive and optimized for different device sizes:
 
 Mobile: Simplified layouts and touch-friendly navigation.
 Tablet: Adaptive grid systems and enhanced usability.
 Desktop: A full-featured experience with advanced visual effects.
-🎭 Theme Switching
+##🎭 Theme Switching
 The application includes a complete dark/light theme system:
 
 Dark Mode: A purple-blue color scheme for reduced eye strain.
 Light Mode: Clean, white backgrounds with accent colors.
 System Preference: Detects and respects the user's system theme.
 Persistent: Saves the user's theme choice in local storage.
-🔎 Browser Compatibility
+##🔎 Browser Compatibility
 This project is compatible with all major modern browsers:
 
 Chrome
@@ -99,17 +99,17 @@ Edge
 React - Frontend library
 Firebase - Authentication and backend
 Tailwind CSS - Utility-first CSS framework
-📜 License
+##📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-🙋‍♂️ Contributing
+##🙋‍♂️ Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-📧 Contact
+##📧 Contact
 For any questions or feedback, please reach out through the contact form on the website.
 
 Code
-
+```bash
 ### Summary of Updates:
 1. **Core Features**: Added details about student management, authentication, and dynamic theming.
 2. **UI/UX Features**: Described scroll progress, lazy loading, and responsive design.
@@ -117,5 +117,5 @@ Code
 4. **Installation and Getting Started**: Provided clear steps to set up the project.
 5. **Theme Switching**: Detailed the dark/light mode functionality.
 6. **Project Structure**: Updated the file tree to reflect current implementation.
-
+```
 Let me know if you'd like further modifications!
