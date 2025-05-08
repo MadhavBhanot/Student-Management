@@ -10,7 +10,8 @@ A modern, responsive web application for managing student data and activities. T
 
 ### 💻 Core Features
 - **Centralized Student Data Management**: Manage and track student records efficiently.
-- **Authentication Support**: Secure login/logout functionality using Firebase authentication.
+- **CRUD Operations with Firebase**: Create, Read, Update, and Delete operations powered by Firebase Firestore.
+- **Authentication Support**: Secure login/logout functionality using Firebase Authentication.
 - **Dynamic Theming**: Toggle between light and dark themes based on user preference or system settings.
 - **Scroll Progress Indicator**: Visual feedback for navigating long pages.
 - **Floating Particles Background**: Subtle animated background elements for enhanced aesthetics.
@@ -22,9 +23,18 @@ A modern, responsive web application for managing student data and activities. T
 - **Smooth Scrolling**: Seamless scrolling experience across sections.
 - **Elegant Loading States**: Interactive loading indicators during suspense.
 
+### 🔒 Firebase Integration
+- **Authentication**: Secure user authentication using Firebase.
+  - Email and password-based authentication.
+  - Persistent session management.
+- **Database**: Firebase Firestore for managing student records.
+  - Real-time updates for student data.
+  - CRUD operations for adding, reading, updating, and deleting student records.
+- **Hosting**: Deploy the application using  Netlify for fast and secure access.
+
 ### 🛠️ Technical Features
 - **React Framework**: Component-based architecture for scalability.
-- **Context API**: Manage theme and state across the application.
+- **Context API**: Manage theme, state, and authentication across the application.
 - **Tailwind CSS**: Utility-first CSS framework for responsive design.
 - **Code Splitting**: Faster initial load times with lazy-loaded components.
 - **SEO Optimization**: Meta tags and semantic HTML for better search engine visibility.
