@@ -75,13 +75,13 @@ student-management/
 └── index.html
 
 ```
-##📱 Responsive Design
+## 📱 Responsive Design
 The application is fully responsive and optimized for different device sizes:
 
 Mobile: Simplified layouts and touch-friendly navigation.
 Tablet: Adaptive grid systems and enhanced usability.
 Desktop: A full-featured experience with advanced visual effects.
-##🎭 Theme Switching
+## 🎭 Theme Switching
 The application includes a complete dark/light theme system:
 
 Dark Mode: A purple-blue color scheme for reduced eye strain.
@@ -95,17 +95,17 @@ Chrome
 Firefox
 Safari
 Edge
-🔧 Built With
+## 🔧 Built With
 React - Frontend library
 Firebase - Authentication and backend
 Tailwind CSS - Utility-first CSS framework
 ##📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-##🙋‍♂️ Contributing
+## 🙋‍♂️ Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-##📧 Contact
+## 📧 Contact
 For any questions or feedback, please reach out through the contact form on the website.
 
 Code
