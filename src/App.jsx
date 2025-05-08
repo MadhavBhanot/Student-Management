@@ -1,73 +1,16 @@
-import React, { useState, useEffect, createContext, lazy, Suspense } from 'react'
-import './App.css'
+import React, { useState, useEffect, createContext, lazy, Suspense } from 'react';
+import './App.css';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Lazy load components for code splitting
-const Navbar = lazy(() => import('./components/Navbar'))
-const Hero = lazy(() => import('./components/Hero'))
-const Features = lazy(() => import('./components/Features'))
-const ProcessFlow = lazy(() => import('./components/ProcessFlow'))
-const Pricing = lazy(() => import('./components/Pricing'))
-const Testimonials = lazy(() => import('./components/Testimonials'))
-const ContactForm = lazy(() => import('./components/ContactForm'))
-const Footer = lazy(() => import('./components/Footer'))
-const ChatBot = lazy(() => import('./components/ChatBot'))
+const Dashboard = lazy(() => import('./components/Dashboard'));
+const ThemeToggle = lazy(() => import('./components/ThemeToggle'));
 
 // Create theme context
 export const ThemeContext = createContext({
   isDark: true,
   toggleTheme: () => {}
-})
-
-// Extend Vanta.js with pause/resume animation
-const extendVanta = () => {
-  if (!window.VANTA) return;
-
-  // Skip if already extended
-  if (window.VANTA.TRUNK && window.VANTA.TRUNK.prototype.pauseAnimation) return;
-
-  // Add pause/resume functionality to all VANTA effects that use three.js
-  Object.keys(window.VANTA).forEach(effect => {
-    const prototype = window.VANTA[effect]?.prototype;
-    
-    // Only add to effects that have three.js renderer
-    if (prototype && prototype.renderer && !prototype.pauseAnimation) {
-      // Add pause animation method
-      prototype.pauseAnimation = function() {
-        if (this.paused) return;
-        this.paused = true;
-        
-        // Store animation loop
-        if (this.renderer && this.renderer.setAnimationLoop) {
-          // Store the current animation loop
-          this._storedAnimationLoop = this.renderer.getAnimationLoop ? this.renderer.getAnimationLoop() : null;
-          // Set animation loop to null to pause
-          this.renderer.setAnimationLoop(null);
-        }
-      };
-      
-      // Add resume animation method
-      prototype.resumeAnimation = function() {
-        if (!this.paused) return;
-        this.paused = false;
-        
-        // Restore animation loop
-        if (this.renderer && this.renderer.setAnimationLoop) {
-          // If we have a stored animation loop, restore it
-          if (this._storedAnimationLoop) {
-            this.renderer.setAnimationLoop(this._storedAnimationLoop);
-          } else {
-            // Fallback to the scene rendering if no stored loop
-            this.renderer.setAnimationLoop(() => {
-              if (this.scene && this.camera) {
-                this.renderer.render(this.scene, this.camera);
-              }
-            });
-          }
-        }
-      };
-    }
-  });
-};
+});
 
 // Background floating particles
 const FloatingParticles = ({ isDark }) => {
@@ -77,45 +20,45 @@ const FloatingParticles = ({ isDark }) => {
       <div className={`absolute top-3/4 left-2/3 w-96 h-96 rounded-full ${isDark ? 'bg-blue-600/10' : 'bg-blue-500/5'} blur-3xl animate-float-slow-reverse`}></div>
       <div className={`absolute top-1/2 left-1/3 w-72 h-72 rounded-full ${isDark ? 'bg-indigo-600/10' : 'bg-indigo-500/5'} blur-3xl animate-float`}></div>
     </div>
-  )
-}
+  );
+};
 
 // Scroll progress indicator
 const ScrollIndicator = () => {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   // Throttle scroll events for performance
   useEffect(() => {
-    let lastKnownScrollPosition = 0
-    let ticking = false
-    
+    let lastKnownScrollPosition = 0;
+    let ticking = false;
+
     const handleScroll = () => {
-      lastKnownScrollPosition = window.scrollY
-      
+      lastKnownScrollPosition = window.scrollY;
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const totalHeight = document.body.scrollHeight - window.innerHeight
-          setScrollProgress(lastKnownScrollPosition / totalHeight)
-          ticking = false
-        })
-        
-        ticking = true
+          const totalHeight = document.body.scrollHeight - window.innerHeight;
+          setScrollProgress(lastKnownScrollPosition / totalHeight);
+          ticking = false;
+        });
+
+        ticking = true;
       }
-    }
-    
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-  
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="fixed top-0 left-0 w-full h-1 z-50">
-      <div 
+      <div
         className="h-full bg-gradient-to-r from-purple-600 to-blue-500"
         style={{ width: `${scrollProgress * 100}%` }}
       ></div>
     </div>
-  )
-}
+  );
+};
 
 // Loading component for suspense fallback
 const LoadingFallback = () => (
@@ -128,10 +71,10 @@ const LoadingFallback = () => (
       Loading...
     </div>
   </div>
-)
+);
 
-// Theme toggle button
-const ThemeToggle = ({ isDark, toggleTheme }) => {
+// Theme toggle button component
+const ThemeToggleButton = ({ isDark, toggleTheme }) => {
   // Memoized toggle to prevent unnecessary re-renders
   return (
     <button
@@ -149,91 +92,66 @@ const ThemeToggle = ({ isDark, toggleTheme }) => {
         </svg>
       )}
     </button>
-  )
-}
+  );
+};
 
 // Main App component
 function App() {
   // Theme state
-  const [isDark, setIsDark] = useState(true)
-  
+  const [isDark, setIsDark] = useState(true);
+
   // Handle theme toggle with debounce to prevent rapid state changes
   const toggleTheme = () => {
-    setIsDark(prevIsDark => !prevIsDark)
-  }
-  
-  // Extend Vanta.js with pause/resume functionality when available
-  useEffect(() => {
-    // Check for Vanta.js every 100ms until found or 30 attempts (3 seconds max)
-    let attempts = 0;
-    const checkInterval = setInterval(() => {
-      if (window.VANTA || attempts > 30) {
-        clearInterval(checkInterval);
-        if (window.VANTA) {
-          extendVanta();
-        }
-      }
-      attempts++;
-    }, 100);
-    
-    return () => clearInterval(checkInterval);
-  }, []);
-  
+    setIsDark((prevIsDark) => !prevIsDark);
+  };
+
   // Apply theme class to document root
   useEffect(() => {
     // Check for user's preferred theme in localStorage or system preference
-    const savedTheme = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: isdark)').matches;
+
     if (savedTheme) {
-      setIsDark(savedTheme === 'dark')
+      setIsDark(savedTheme === 'dark');
     } else if (prefersDark !== undefined) {
-      setIsDark(prefersDark)
+      setIsDark(prefersDark);
     }
-  }, [])
-  
+  }, []);
+
   // Update document class and localStorage when theme changes
   useEffect(() => {
     if (isDark) {
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('light')
-      localStorage.setItem('theme', 'dark')
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.classList.add('light')
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
-  }, [isDark])
-  
+  }, [isDark]);
+
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
-      {/* Background particles for visual interest - fewer on mobile */}
-      <FloatingParticles isDark={isDark} />
-      
-      {/* Scroll progress indicator */}
-      <ScrollIndicator />
-      
-      {/* Theme toggle button - z-index 40 to appear below ChatBot */}
-      <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-      
-      {/* Main content */}
-      <Suspense fallback={<LoadingFallback />}>
-        <div className="relative z-10">
-          <Navbar />
-          <main>
-            <Hero />
-            <Features />
-            <ProcessFlow />
-            <Pricing />
-            <Testimonials />
-            <ContactForm />
-          </main>
-          <Footer />
-          <ChatBot />
-        </div>
-      </Suspense>
+      <AuthProvider>
+        {/* Background particles for visual interest - fewer on mobile */}
+        <FloatingParticles isDark={isDark} />
+
+        {/* Scroll progress indicator */}
+        <ScrollIndicator />
+
+        {/* Theme toggle button - z-index 40 to appear below modals */}
+        <ThemeToggleButton isDark={isDark} toggleTheme={toggleTheme} />
+
+        {/* Main content */}
+        <Suspense fallback={<LoadingFallback />}>
+          <div className="relative z-10">
+            <Dashboard />
+          </div>
+        </Suspense>
+      </AuthProvider>
     </ThemeContext.Provider>
-  )
+  );
 }
 
-export default App
+export default App;

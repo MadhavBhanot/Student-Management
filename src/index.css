@@ -20,16 +20,16 @@
 
 /* Light theme colors */
 .light {
-  --bg-main: #f1f5f9;
-  --bg-surface: #ffffff;
+  --bg-main: #96bade,
+  --bg-surface: #96bade;
   --text-primary: #1e293b;
   --text-secondary: #475569;
   --border-color: rgba(99, 102, 241, 0.2);
   --accent-purple: #8b5cf6;
   --accent-indigo: #4f46e5;
   --accent-blue: #3b82f6;
-  --hero-bg-from: #eef2ff;
-  --hero-bg-to: #e0e7ff;
+  --hero-bg-from: #96bade;
+  --hero-bg-to: #96bade;
 }
 
 /* Base styles */
